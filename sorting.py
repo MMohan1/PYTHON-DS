@@ -1,8 +1,9 @@
-input_list = [3,4,2,7,8,101,1,67,41,69, 32, 24,12,67, 891, 111, 987, 345, 678,900]
-input_list = [3,4,2,7,8,101,90,8]
+input_list = [3,4,2,7,8,101,1,67,41,69, 32, 24,12,67, 891, 111, 987, 345, 678,900, 1000,4,23]
+#input_list = [3,4,2,9]
+
 
 def bubble_sort(input_list):
-    update=False
+    update = False
     total_length = len(input_list)-1
     for i in range(total_length):
         next_item = input_list[i+1]
@@ -16,7 +17,6 @@ def bubble_sort(input_list):
     return bubble_sort(input_list)
 
 
-
 def insertion_sort(input_list):
     total_length = len(input_list)-1
     for i in range(total_length):
@@ -27,6 +27,7 @@ def insertion_sort(input_list):
             input_list[i+1] = this_item
             return insertion_sort(input_list)
     return input_list
+
 
 def selection_sort(input_list):
     total_length = len(input_list)
@@ -50,7 +51,6 @@ def merge_sort(input_list):
         total_length = len(input_list)
         left_part = total_length/2
         return input_list[0:left_part], input_list[left_part:]
-
 
     def merge_data(first_sort_list, second_sort_list):
         sorted_merged_list = []
@@ -80,7 +80,7 @@ def merge_sort(input_list):
         if first_item > next_item:
             return [next_item, first_item]
         return node
-        
+
     def start_the_sorting(input_list):
         divided_list = []
         pending_list = [input_list]
@@ -104,8 +104,7 @@ def merge_sort(input_list):
                 divided_list.append(right_part)
         return divided_list
 
-
-    tmp_sort =  start_the_sorting(input_list)
+    tmp_sort = start_the_sorting(input_list)
     while len(tmp_sort) > 1:
         _sort_list = []
         for i in range((len(tmp_sort))/2):
@@ -150,7 +149,7 @@ def quick_sort(input_list):
 
         return input_list
 
-    def start_the_process(input_list, ):
+    def start_the_process(input_list):
         """
         """
         out_list = [input_list]
@@ -176,6 +175,59 @@ def quick_sort(input_list):
                 i += 1
         return out_list
     return start_the_process(input_list)
-print quick_sort(input_list)
 
-    
+
+def heap_sort(input_list):
+    def make_the_tree(input_list):
+        tree_dict = {}
+        i = 0
+        max_key = 0
+        data_len = len(input_list)
+        
+        if data_len > 2:
+            while i < data_len-2:
+                if i == data_len-2:
+                    if input_list[i] > input_list[i+1]:
+                        tree_dict[input_list[i]] = [input_list[i+1]]
+                        if input_list[i] > max_key:
+                            max_key = input_list[i]
+                    else:
+                        tree_dict[input_list[i+1]] = [input_list[i]]
+                        if input_list[i+1] > max_key:
+                            max_key = input_list[i+1]
+                else:
+                    if input_list[i] > input_list[i+1] and input_list[i] > input_list[i+2]:
+                        tree_dict[input_list[i]] = [input_list[i+1], input_list[i+2]]
+                        if input_list[i] > max_key:
+                            max_key = input_list[i]
+                    elif input_list[i+1] > input_list[i] and input_list[i+1] > input_list[i+2]:
+                        tree_dict[input_list[i+1]] = [input_list[i], input_list[i+2]]
+                        if input_list[i+1] > max_key:
+                            max_key = input_list[i+1]
+                    elif input_list[i+2] > input_list[i] and input_list[i+2] > input_list[i+1]:
+                        tree_dict[input_list[i+2]] = [input_list[i], input_list[i+1]]
+                        if input_list[i+2] > max_key:
+                            max_key = input_list[i+2]
+                i += 1
+        else:
+            first_item = input_list[0]
+            next_item = input_list[1]
+            if first_item > next_item:
+                return first_item
+            return next_item
+        return max_key
+
+    def start_the_process(input_list):
+        out_list = []
+        input_len = len(input_list)
+        while len(out_list) != input_len:
+            tree_data = make_the_tree(input_list)
+            out_list.insert(0, tree_data)
+            input_list.remove(tree_data)
+            if len(input_list) == 1:
+                out_list.insert(0, input_list[0])
+        return out_list
+    return start_the_process(input_list)
+
+
+print heap_sort(input_list)

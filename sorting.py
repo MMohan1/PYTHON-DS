@@ -1,5 +1,5 @@
 input_list = [3,4,2,7,8,101,1,67,41,69, 32, 24,12,67, 891, 111, 987, 345, 678,900]
-#input_list = [3,4,2,7,8,101,90,8]
+input_list = [3,4,2,7,8,101,90,8]
 
 def bubble_sort(input_list):
     update=False
@@ -106,7 +106,6 @@ def merge_sort(input_list):
 
 
     tmp_sort =  start_the_sorting(input_list)
-    print tmp_sort
     while len(tmp_sort) > 1:
         _sort_list = []
         for i in range((len(tmp_sort))/2):
@@ -122,6 +121,61 @@ def merge_sort(input_list):
         tmp_sort = _sort_list
     return tmp_sort[0]
 
-print selection_sort(input_list)
+
+def quick_sort(input_list):
+    def get_pivot_index(input_list, pivot_index=0):
+        pivot_value = input_list[0]
+        left_index = 1
+        right_index = len(input_list)-1
+        crossed = False
+        while not crossed:
+            left_value = input_list[left_index]
+            right_value = input_list[right_index]
+            if left_value > pivot_value:
+                input_list.pop(left_index)
+                input_list.insert(right_index, left_value)
+                right_index = right_index-1
+            elif right_value < pivot_value:
+                input_list.pop(right_index)
+                input_list.insert(left_index, right_value)
+                left_index = left_index+1
+            else:
+                right_index = right_index-1
+                left_index = left_index+1
+            if left_index > right_index:
+                input_list.pop(pivot_index)
+                return input_list[0:left_index-1], input_list[left_index-1:], pivot_value
+                input_list.insert(left_index-1, pivot_value)
+                crossed = True
+
+        return input_list
+
+    def start_the_process(input_list, ):
+        """
+        """
+        out_list = [input_list]
+        i = 0
+        while i < len(out_list):
+            to_sort = out_list[i]
+            if isinstance(to_sort, list):
+                left_partation, right_partation, pivot = get_pivot_index(to_sort)
+                out_list.remove(to_sort)
+                pivot_index = i+1
+                if len(left_partation) > 1:
+                    out_list.insert(i, left_partation)
+                elif len(left_partation) == 1:
+                    out_list.insert(i, left_partation[0])
+                else:
+                    pivot_index = i
+                out_list.insert(pivot_index, pivot)
+                if len(right_partation) > 1:
+                    out_list.insert(pivot_index+1, right_partation)
+                elif len(right_partation) == 1:
+                    out_list.insert(pivot_index+1, right_partation[0])
+            else:
+                i += 1
+        return out_list
+    return start_the_process(input_list)
+print quick_sort(input_list)
 
     

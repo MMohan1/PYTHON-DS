@@ -1,6 +1,5 @@
-
-#input_list = [3,4,2,7,8,101,1,67,41,69, 32, 24,12,67, 891, 111, 987, 345, 678,900]
-input_list = [3,4,2,7,8,101,90,8]
+input_list = [3,4,2,7,8,101,1,67,41,69, 32, 24,12,67, 891, 111, 987, 345, 678,900]
+#input_list = [3,4,2,7,8,101,90,8]
 
 def bubble_sort(input_list):
     update=False
@@ -33,12 +32,16 @@ def selection_sort(input_list):
     total_length = len(input_list)
     for i in range(total_length):
         this_item = input_list[i]
+        update = False
         for j in range(i+1, total_length):
             next_item = input_list[j]
             if next_item < this_item:
                 input_list[i] = next_item
                 input_list[j] = this_item
-                return selection_sort(input_list)
+                this_item = next_item
+                update = True
+        if update:
+            return selection_sort(input_list)
     return input_list
 
 
@@ -119,6 +122,6 @@ def merge_sort(input_list):
         tmp_sort = _sort_list
     return tmp_sort[0]
 
-print merge_sort(input_list)
+print selection_sort(input_list)
 
     
